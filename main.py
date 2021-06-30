@@ -1880,6 +1880,43 @@ def ventanaJugar(): #Ventana jugar
 
     ventana.mainloop()
 
+def ventanaConfigurar(): #configuracion
+    ventana = tkinter.Tk()  # Se crea la ventana
+    ventana.geometry("400x400")  # Tamanno de la ventana
+    ventana.title("Futoshiki")  # Titulo
+    titulo = tkinter.Label(ventana, text="Configuracion")
+    titulo.place(x=0, y=0)
+    labelNivel=tkinter.Label(ventana,text="Nivel")
+    labelNivel.place(x=0,y=40)
+    labelTimer=tkinter.Label(ventana,text="Timer")
+    labelTimer.place(x=0,y=210)
+    def facil():
+        dificultad[0]="facil"
+    def medio():
+        dificultad[0]="medio"
+    def dificil():
+        dificultad[0]="dificil"
+    def si():
+        timer[0]="si"
+    def no():
+        timer[0]="no"
+    def volver():
+        ventana.destroy()
+        ventanaMenu()
+    botonFacil=tkinter.Button(ventana,text="Facil",command=facil)
+    botonFacil.place(x=20,y=70)
+    botonMedio = tkinter.Button(ventana, text="Medio",command=medio)
+    botonMedio.place(x=20,y=110)
+    botonDificil = tkinter.Button(ventana, text="Dificil",command=dificil)
+    botonDificil.place(x=20,y=150)
+    botonSi=tkinter.Button(ventana,text="Si",command=si)
+    botonSi.place(x=20,y=250)
+    botonNo=tkinter.Button(ventana,text="No",command=no)
+    botonNo.place(x=20,y=290)
+    botonVolver=tkinter.Button(ventana,text="Volver",command=volver)
+    botonVolver.place(x=200,y=340)
+    ventana.mainloop()
+
 def ventanaNombre():
     ventana = tkinter.Tk()  # Se crea la ventana
     ventana.geometry("400x250")  # Tamanno de la ventana
