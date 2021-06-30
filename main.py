@@ -1,2 +1,3 @@
 import tkinter
 
+print("Prueba")
