@@ -14,6 +14,28 @@ listaFacil=[
 )
 ]
 
+def mensaje(texto,boton): #Se utiliza para mostrar mensajes
+    boton.config(bg='#ff0000')
+    ventana = tkinter.Tk() #Crea una ventana
+    ventana.geometry("300x100")
+    ventana.title("Futoshiki") #Se le pone titulo
+    Mensaje=tkinter.Label(ventana,text=str(texto)) #Aqui va el mensaje
+    Mensaje.place(x=80,y=20)
+    def destruir():
+        ventana.destroy()
+        boton.config(bg="SystemButtonFace")
+    Boton=tkinter.Button(ventana,text="Okey",command=destruir) #Boton de ok para salir
+    Boton.place(x=120,y=60)
+
+def mensaje2(texto): #Se utiliza para mostrar mensajes
+    ventana = tkinter.Tk() #Crea una ventana
+    ventana.geometry("300x100")
+    ventana.title("Futoshiki") #Se le pone titulo
+    Mensaje=tkinter.Label(ventana,text=str(texto)) #Aqui va el mensaje
+    Mensaje.place(x=80,y=20)
+    Boton=tkinter.Button(ventana,text="Okey",command=ventana.destroy) #Boton de ok para salir
+    Boton.place(x=120,y=60)
+
 def ventanaNombre():
     ventana = tkinter.Tk()  # Se crea la ventana
     ventana.geometry("400x250")  # Tamanno de la ventana
