@@ -1,5 +1,18 @@
 import tkinter
 
+configuracion=[[["a"],["b"]]]
+nombre=[" "]
+dificultad=["facil"]
+timer=["no"]
+
+listaFacil=[
+((">", 0, 0), (">", 0, 2), (">", 0, 3),
+("4", 1, 0), ("2", 1, 4),
+("4", 2, 2),
+("<", 3, 3), ("4", 3, 4),
+("<", 4, 0), ("<", 4, 1)
+)
+]
 
 def ventanaNombre():
     ventana = tkinter.Tk()  # Se crea la ventana
@@ -94,3 +107,5 @@ def ventanaMenu(): #menu
     botonAcerca.place(x=110, y=270)
 
     ventana.mainloop()
+
+ventanaNombre()
