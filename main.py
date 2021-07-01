@@ -1,5 +1,7 @@
 import tkinter
 import random
+import time
+from threading import *
 
 configuracion=[[["a"],["b"]]]
 nombre=[" "]
@@ -96,6 +98,20 @@ def ventanaJugar(): #Ventana jugar
     nombreJugador.place(x=180,y=100)
     nombreJugador.config(text=str(nombre[0]))
     #labels y botones
+
+    labelHorasTexto=tkinter.Label(ventana,text="HH")
+    labelMinutosTexto=tkinter.Label(ventana,text="MM")
+    labelSegundosTexto=tkinter.Label(ventana,text="SS")
+    labelHoras=tkinter.Label(ventana,text="0")
+    labelMinutos=tkinter.Label(ventana,text="0")
+    labelSegundos=tkinter.Label(ventana,text="0")
+    labelSegundosTexto.place(x=410,y=580)
+    labelMinutosTexto.place(x=385,y=580)
+    labelHorasTexto.place(x=360,y=580)
+    labelSegundos.place(x=415,y=600)
+    labelMinutos.place(x=390,y=600)
+    labelHoras.place(x=365,y=600)
+
     labelFlecha01=tkinter.Label(ventana,text="",font=40)
     labelFlecha02 = tkinter.Label(ventana, text="",font=40)
     labelFlecha03 = tkinter.Label(ventana, text="",font=40)
@@ -194,6 +210,17 @@ def ventanaJugar(): #Ventana jugar
     labelFlecha82.place(x=300, y=435)
     labelFlecha83.place(x=370, y=435)
     labelFlecha84.place(x=440, y=435)
+
+
+    def cronometro():
+        for hora in range(24):
+            for minuto in range(60):
+                for segundo in range(60):
+                    time.sleep(1)
+                    labelSegundos.config(text=str(segundo))
+                    labelMinutos.config(text=str(minuto))
+                    labelHoras.config(text=str(hora))
+
  #cuando gana
     def ganar():
         for i in range(len(matrizJuego)):
@@ -207,6 +234,9 @@ def ventanaJugar(): #Ventana jugar
         archivo=open("futoshiki2021top10.dat","a")
         archivo.write(dificultad[0]+"\n")
         archivo.write(nombre[0]+"\n")
+        archivo.write(labelHoras.cget("text")+"\n")
+        archivo.write(labelMinutos.cget("text") + "\n")
+        archivo.write(labelSegundos.cget("text") + "\n")
     #verificar si se cumple para agregar boton
     def verificar(x,y,numero):
         def existe():
@@ -413,6 +443,7 @@ def ventanaJugar(): #Ventana jugar
                 return existe()
     #por si selecciona algun boton
     def tocarBoton1():
+        victoria()
         if activo[0] == 1:
             if seleccionado[0]=="1":
                 boton1.config(bg='#0000ff')
@@ -926,6 +957,8 @@ def ventanaJugar(): #Ventana jugar
     boton55.place(x=460, y=430)
 
     def actualizar():
+        hilo = Thread(target=cronometro)
+        hilo.start()
         activo[0] = 1
         for i in range(len(listaFacil[0])):
             if listaFacil[0][i][0]=="<":
