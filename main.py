@@ -1745,7 +1745,7 @@ def ventanaJugar(): #Ventana jugar
         listaFa=[]
         listaMe=[]
         listaDi=[]
-        archivo=open("futoshiki2021top10.dat","r")
+        archivo=open("futoshiki2021top10.dat","w")
         texto=archivo.readlines()
         for i in range(len(texto)):
             texto[i]=texto[i].rstrip("\n")
@@ -1803,58 +1803,126 @@ def ventanaJugar(): #Ventana jugar
 
 
     def guardarJuego(): #para cuando se guarda
-        archivo=open("futoshiki2021juegoactual.dat","w")
-        archivo.writelines(str(configuracion[0])+"\n")
-        archivo.writelines(str(nombre[0])+"\n")
-        archivo.writelines(str(matrizJuego[0])+"\n")
-        archivo.writelines(str(matrizJuego[1])+"\n")
-        archivo.writelines(str(matrizJuego[2])+"\n")
-        archivo.writelines(str(matrizJuego[3])+"\n")
-        archivo.writelines(str(matrizJuego[4])+"\n")
-        archivo.writelines(str(matrizJuego[5])+"\n")
-        archivo.writelines(str(matrizJuego[6])+"\n")
-        archivo.writelines(str(matrizJuego[7])+"\n")
-        archivo.writelines(str(matrizJuego[8]))
+        if activo[0]==1:
+            archivo=open("futoshiki2021juegoactual.dat","w")
+            archivo.writelines(str(configuracion[0])+"\n")
+            archivo.writelines(str(nombre[0])+"\n")
+            for i in range(len(matrizJuego)):
+                for j in range(len(matrizJuego[i])):
+                    if type(matrizJuego[i][j]) == int:
+                        archivo.writelines(str(matrizJuego[i][j])+"a" + "\n")
+                    else:
+                        archivo.writelines(str(matrizJuego[i][j])+"\n")
+            #archivo.writelines(str(matrizJuego[1])+"\n")
+            #archivo.writelines(str(matrizJuego[2])+"\n")
+            #archivo.writelines(str(matrizJuego[3])+"\n")
+            #archivo.writelines(str(matrizJuego[4])+"\n")
+            #archivo.writelines(str(matrizJuego[5])+"\n")
+            #archivo.writelines(str(matrizJuego[6])+"\n")
+            #archivo.writelines(str(matrizJuego[7])+"\n")
+            #archivo.writelines(str(matrizJuego[8]))
 
     def cargarPartida(): #para cargar
-        archivo=open("futoshiki2021juegoactual.dat","r")
-        texto=archivo.readlines()
-        matriz=[]
-        for i in range(len(texto)):
-            texto[i]=texto[i].rstrip("\n")
-        print(texto)
-        texto[2]=texto[2][1:34]
-        texto[2]=texto[2].split(",")
-        texto[3] = texto[3][1:24]
-        texto[3] = texto[3].split(",")
-        texto[4] = texto[4][1:34]
-        texto[4] = texto[4].split(",")
-        texto[5] = texto[5][1:24]
-        texto[5] = texto[5].split(",")
-        texto[6] = texto[6][1:34]
-        texto[6] = texto[6].split(",")
-        texto[7] = texto[7][1:24]
-        texto[7] = texto[7].split(",")
-        texto[8] = texto[8][1:34]
-        texto[8] = texto[8].split(",")
-        texto[9] = texto[9][1:24]
-        texto[9] = texto[9].split(",")
-        texto[10] = texto[10][1:34]
-        texto[10] = texto[10].split(",")
-        matriz.append(list(texto[2]))
-        matriz.append(list(texto[3]))
-        matriz.append(list(texto[4]))
-        matriz.append(list(texto[5]))
-        matriz.append(list(texto[6]))
-        matriz.append(list(texto[7]))
-        matriz.append(list(texto[8]))
-        matriz.append(list(texto[9]))
-        matriz.append(list(texto[10]))
-        print(matriz[0][1])
-        for i in range(len(matrizJuego)):
-            for j in range(len(matrizJuego[i])):
-                matrizJuego[i][j]=matriz[i][j]
-        actualizarMatriz()
+        if activo[0]==0:
+            archivo=open("futoshiki2021juegoactual.dat","r")
+            texto=archivo.readlines()
+            matriz=[]
+            for i in range(len(texto)):
+                texto[i]=texto[i].rstrip("\n")
+            print(texto)
+            lista=[]
+            lista.append(texto[2])
+            lista.append(texto[3])
+            lista.append(texto[4])
+            lista.append(texto[5])
+            lista.append(texto[6])
+            lista.append(texto[7])
+            lista.append(texto[8])
+            lista.append(texto[9])
+            lista.append(texto[10])
+            matriz.append(lista)
+            lista = []
+            lista.append(texto[11])
+            lista.append(texto[12])
+            lista.append(texto[13])
+            lista.append(texto[14])
+            lista.append(texto[15])
+            matriz.append(lista)
+            lista = []
+            lista.append(texto[16])
+            lista.append(texto[17])
+            lista.append(texto[18])
+            lista.append(texto[19])
+            lista.append(texto[20])
+            lista.append(texto[21])
+            lista.append(texto[22])
+            lista.append(texto[23])
+            lista.append(texto[24])
+            matriz.append(lista)
+            lista=[]
+            lista.append(texto[25])
+            lista.append(texto[26])
+            lista.append(texto[27])
+            lista.append(texto[28])
+            lista.append(texto[29])
+            matriz.append(lista)
+            lista = []
+            lista.append(texto[30])
+            lista.append(texto[31])
+            lista.append(texto[32])
+            lista.append(texto[33])
+            lista.append(texto[34])
+            lista.append(texto[35])
+            lista.append(texto[36])
+            lista.append(texto[37])
+            lista.append(texto[38])
+            matriz.append(lista)
+            lista = []
+
+            lista.append(texto[39])
+            lista.append(texto[40])
+            lista.append(texto[41])
+            lista.append(texto[42])
+            lista.append(texto[43])
+            matriz.append(lista)
+            lista = []
+            lista.append(texto[44])
+            lista.append(texto[45])
+            lista.append(texto[46])
+            lista.append(texto[47])
+            lista.append(texto[48])
+            lista.append(texto[49])
+            lista.append(texto[50])
+            lista.append(texto[51])
+            lista.append(texto[52])
+            matriz.append(lista)
+            lista = []
+            lista.append(texto[53])
+            lista.append(texto[54])
+            lista.append(texto[55])
+            lista.append(texto[56])
+            lista.append(texto[57])
+            matriz.append(lista)
+            lista = []
+            lista.append(texto[58])
+            lista.append(texto[59])
+            lista.append(texto[60])
+            lista.append(texto[61])
+            lista.append(texto[62])
+            lista.append(texto[63])
+            lista.append(texto[64])
+            lista.append(texto[65])
+            lista.append(texto[66])
+            matriz.append(lista)
+            print(matriz)
+            for i in range(len(matrizJuego)):
+                for j in range(len(matrizJuego[i])):
+                    if len(matriz[i][j])==2:
+                        matrizJuego[i][j]=int(matriz[i][j][0])
+                    else:
+                        matrizJuego[i][j]=matriz[i][j]
+            actualizarMatriz()
+            activo[0]=1
 
 
     botonIniciarJuego=tkinter.Button(ventana,text="INICIAR JUEGO",width=12, height=3, borderwidth=1, relief="solid",bg='#ff0000',command=actualizar)
