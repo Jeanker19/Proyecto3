@@ -1809,6 +1809,7 @@ def ventanaJugar(): #Ventana jugar
             Boton2.place(x=80, y=60)
 
     def top10(): #mostrar top 10
+
         listaFa=[]
         listaMe=[]
         listaDi=[]
