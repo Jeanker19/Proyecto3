@@ -1,18 +1,52 @@
 import tkinter
+import random
 
 configuracion=[[["a"],["b"]]]
 nombre=[" "]
 dificultad=["facil"]
 timer=["no"]
 
-listaFacil=[
-((">", 0, 0), (">", 0, 2), (">", 0, 3),
-("4", 1, 0), ("2", 1, 4),
-("4", 2, 2),
-("<", 3, 3), ("4", 3, 4),
-("<", 4, 0), ("<", 4, 1)
-)
-]
+listaFacil=[[]]
+
+listaFacil1=[]
+listaMedio1=[]
+listaDificil1=[]
+contador=0
+
+archivo=open("futoshiki2021partidas.dat","r")
+texto=archivo.readlines()
+for i in range(len(texto)):
+    texto[i] = texto[i].rstrip("\n")
+
+listaGrande=[[]]
+
+for i in range(len(texto)):
+    if texto[i]=="":
+        contador=contador+1
+        if contador<=3:
+            listaFacil1.append(listaGrande[0])
+            listaGrande[0]=[]
+        if contador>3 and contador<=6:
+            listaMedio1.append(listaGrande[0])
+            listaGrande[0]=[]
+        if contador>6:
+            listaDificil1.append(listaGrande[0])
+            listaGrande[0]=[]
+
+    else:
+        listaGrande[0].append((texto[i][0], int(texto[i][3]), int(texto[i][6])))
+
+if dificultad[0]=="facil":
+    randon=random.randrange(0,3)
+    listaFacil[0]=listaFacil1[randon]
+
+if dificultad[0]=="medio":
+    randon=random.randrange(0,3)
+    listaFacil[0]=listaMedio1[randon]
+
+if dificultad[0]=="dificil":
+    randon=random.randrange(0,3)
+    listaFacil[0]=listaDificil1[randon]
 
 def mensaje(texto,boton): #Se utiliza para mostrar mensajes
     boton.config(bg='#ff0000')
@@ -1799,9 +1833,6 @@ def ventanaJugar(): #Ventana jugar
         medio.config(text=textMe)
         dificil.config(text=textDi)
 
-
-
-
     def guardarJuego(): #para cuando se guarda
         if activo[0]==1:
             archivo=open("futoshiki2021juegoactual.dat","w")
@@ -1813,14 +1844,6 @@ def ventanaJugar(): #Ventana jugar
                         archivo.writelines(str(matrizJuego[i][j])+"a" + "\n")
                     else:
                         archivo.writelines(str(matrizJuego[i][j])+"\n")
-            #archivo.writelines(str(matrizJuego[1])+"\n")
-            #archivo.writelines(str(matrizJuego[2])+"\n")
-            #archivo.writelines(str(matrizJuego[3])+"\n")
-            #archivo.writelines(str(matrizJuego[4])+"\n")
-            #archivo.writelines(str(matrizJuego[5])+"\n")
-            #archivo.writelines(str(matrizJuego[6])+"\n")
-            #archivo.writelines(str(matrizJuego[7])+"\n")
-            #archivo.writelines(str(matrizJuego[8]))
 
     def cargarPartida(): #para cargar
         if activo[0]==0:
@@ -1829,7 +1852,6 @@ def ventanaJugar(): #Ventana jugar
             matriz=[]
             for i in range(len(texto)):
                 texto[i]=texto[i].rstrip("\n")
-            print(texto)
             lista=[]
             lista.append(texto[2])
             lista.append(texto[3])
@@ -1914,7 +1936,18 @@ def ventanaJugar(): #Ventana jugar
             lista.append(texto[65])
             lista.append(texto[66])
             matriz.append(lista)
-            print(matriz)
+            if dificultad[0] == "facil":
+                randon = random.randrange(0, 3)
+                listaFacil[0] = listaFacil1[randon]
+
+            if dificultad[0] == "medio":
+                randon = random.randrange(0, 3)
+                listaFacil[0] = listaMedio1[randon]
+
+            if dificultad[0] == "dificil":
+                randon = random.randrange(0, 3)
+                listaFacil[0] = listaDificil1[randon]
+
             for i in range(len(matrizJuego)):
                 for j in range(len(matrizJuego[i])):
                     if len(matriz[i][j])==2:
@@ -1960,10 +1993,13 @@ def ventanaConfigurar(): #configuracion
     labelTimer.place(x=0,y=210)
     def facil():
         dificultad[0]="facil"
+        listaFacil[0] = listaFacil1[randon]
     def medio():
         dificultad[0]="medio"
+        listaFacil[0] = listaMedio1[randon]
     def dificil():
         dificultad[0]="dificil"
+        listaFacil[0] = listaDificil1[randon]
     def si():
         timer[0]="si"
     def no():
@@ -1994,10 +2030,14 @@ def ventanaNombre():
     nombr = tkinter.Entry(ventana)
     nombr.place(x=100, y=20)
 
+
     def listo():
-        nombre[0] = nombr.get()
-        ventana.destroy()
-        ventanaMenu()
+        if len(nombr.get())>1 and (len(nombr.get())<20):
+            nombre[0] = nombr.get()
+            ventana.destroy()
+            ventanaMenu()
+        else:
+            mensaje2("Escoja un nombre apropiado")
 
     boton = tkinter.Button(ventana, text="Ok", command=listo)
     boton.place(x=100, y=100)
