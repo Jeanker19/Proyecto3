@@ -3,10 +3,9 @@ import random
 import time
 from threading import *
 
-configuracion=[[["a"],["b"]]]
 nombre=[" "]
 dificultad=["facil"]
-timer=["no"]
+timer=["si"]
 
 listaFacil=[[]]
 
@@ -213,13 +212,14 @@ def ventanaJugar(): #Ventana jugar
 
 
     def cronometro():
-        for hora in range(24):
-            for minuto in range(60):
-                for segundo in range(60):
-                    time.sleep(1)
-                    labelSegundos.config(text=str(segundo))
-                    labelMinutos.config(text=str(minuto))
-                    labelHoras.config(text=str(hora))
+        if timer[0]=="si":
+            for hora in range(24):
+                for minuto in range(60):
+                    for segundo in range(60):
+                        time.sleep(1)
+                        labelSegundos.config(text=str(segundo))
+                        labelMinutos.config(text=str(minuto))
+                        labelHoras.config(text=str(hora))
 
  #cuando gana
     def ganar():
@@ -443,7 +443,6 @@ def ventanaJugar(): #Ventana jugar
                 return existe()
     #por si selecciona algun boton
     def tocarBoton1():
-        victoria()
         if activo[0] == 1:
             if seleccionado[0]=="1":
                 boton1.config(bg='#0000ff')
@@ -1813,17 +1812,23 @@ def ventanaJugar(): #Ventana jugar
         listaFa=[]
         listaMe=[]
         listaDi=[]
-        archivo=open("futoshiki2021top10.dat","w")
+        archivo=open("futoshiki2021top10.dat","r")
         texto=archivo.readlines()
         for i in range(len(texto)):
             texto[i]=texto[i].rstrip("\n")
         for i in range(len(texto)):
             if texto[i]=="facil":
-                listaFa.append(texto[i+1])
+                listaFa.append([int(texto[i+2]),int(texto[i+3]),int(texto[i+4]),texto[i+1]])
             if texto[i]=="medio":
-                listaMe.append(texto[i+1])
+                listaMe.append([int(texto[i+2]),int(texto[i+3]),int(texto[i+4]),texto[i+1]])
             if texto[i]=="dificil":
-                listaDi.append(texto[i+1])
+                listaDi.append([int(texto[i+2]),int(texto[i+3]),int(texto[i+4]),texto[i+1]])
+        listaFa.sort()
+        listaFa.reverse()
+        listaDi.sort()
+        listaDi.reverse()
+        listaMe.sort()
+        listaMe.reverse()
         ventana1 = tkinter.Tk()
         ventana1.geometry("600x600")
         ventana1.title("Futoshiki")
@@ -1842,27 +1847,32 @@ def ventanaJugar(): #Ventana jugar
         if len(listaFa)>=10:
             textFa=""
             for i in range(10):
-                textFa=listaFa[i]+"\n"+textFa
-        if len(listaFa)<10:
+                textFa = listaFa[i][3] + "  " + str(listaFa[i][0]) + ":" + str(listaFa[i][1]) + ":" + str(listaFa[i][2]) + "\n" + textFa
+
+        if len(listaFa)<10 and len(listaFa)!=0:
             textFa = ""
             for i in range(len(listaFa)):
-                textFa = listaFa[i] + "\n" + textFa
+                textFa = listaFa[i][3]+"  "+str(listaFa[i][0])+":"+str(listaFa[i][1])+":"+str(listaFa[i][2])+"\n" + textFa
+
         if len(listaMe)>=10:
             textMe=""
             for i in range(10):
-                textMe=listaMe[i]+"\n"+textMe
-        if len(listaMe)<10:
+                textMe = listaMe[i][3]+"  "+str(listaMe[i][0])+":"+str(listaMe[i][1])+":"+str(listaMe[i][2])+"\n" + textMe
+
+        if len(listaMe)<10 and listaMe!=0:
             textMe = ""
             for i in range(len(listaMe)):
-                textMe = listaMe[i] + "\n" + textMe
+                textMe = listaMe[i][3]+"  "+str(listaMe[i][0])+":"+str(listaMe[i][1])+":"+str(listaMe[i][2])+"\n" + textMe
         if len(listaDi)>=10:
             textDi=""
             for i in range(10):
-                textDi=listaDi[i]+"\n"+textDi
-        if len(listaDi)<10:
+                textDi=listaDi[i][3]+"  "+str(listaDi[i][0])+":"+str(listaDi[i][1])+":"+str(listaDi[i][2])+"\n" + textDi
+
+        if len(listaDi)<10 and len(listaDi)!=0:
             textDi = ""
             for i in range(len(listaDi)):
-                textDi = listaDi[i] + "\n" + textDi
+                textDi = listaDi[i][3]+"  "+str(listaDi[i][0])+":"+str(listaDi[i][1])+":"+str(listaDi[i][2])+"\n" + textDi
+
         facil.config(text=textFa)
         medio.config(text=textMe)
         dificil.config(text=textDi)
@@ -1870,7 +1880,7 @@ def ventanaJugar(): #Ventana jugar
     def guardarJuego(): #para cuando se guarda
         if activo[0]==1:
             archivo=open("futoshiki2021juegoactual.dat","w")
-            archivo.writelines(str(configuracion[0])+"\n")
+            archivo.writelines(str(timer[0])+"\n")
             archivo.writelines(str(nombre[0])+"\n")
             for i in range(len(matrizJuego)):
                 for j in range(len(matrizJuego[i])):
@@ -1990,6 +2000,8 @@ def ventanaJugar(): #Ventana jugar
                         matrizJuego[i][j]=matriz[i][j]
             actualizarMatriz()
             activo[0]=1
+            nombre[0]=texto[1]
+            timer[0]=texto[0]
 
 
     botonIniciarJuego=tkinter.Button(ventana,text="INICIAR JUEGO",width=12, height=3, borderwidth=1, relief="solid",bg='#ff0000',command=actualizar)
